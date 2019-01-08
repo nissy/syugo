@@ -1,0 +1,16 @@
+[[collect]]
+  repository = "https://github.com/google/fonts"
+  requests = [
+    "ufl/ubuntu/Ubuntu-Medium.ttf",
+    "ufl/ubuntu/Ubuntu-MediumItalic.ttf",
+  ]
+  version = "master"
+  dir = "fonts"
+
+[[collect]]
+  repository = "https://github.com/Microsoft/fonts"
+  requests = [
+    "Symbols/winjs-symbols.ttf",
+  ]
+  version = "master"
+  dir = "fonts"
