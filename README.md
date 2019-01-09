@@ -3,12 +3,12 @@ Collect files from git repositorys.
 
 ## Setup
 ```
-$ go get -u github.com/nissy/syugo
+$ go get -u github.com/nissy/syugo/cmd/syugo
 ```
 
 ## Config
 ```toml
-[[collect]]
+[[collects]]
   repository = "https://github.com/google/fonts"
   requests = [
     "ufl/ubuntu/Ubuntu-Medium.ttf",
@@ -17,7 +17,7 @@ $ go get -u github.com/nissy/syugo
   version = "master"
   dir = "fonts"
 
-[[collect]]
+[[collects]]
   repository = "https://github.com/Microsoft/fonts"
   requests = [
     "Symbols/winjs-symbols.ttf",
