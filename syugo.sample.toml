@@ -1,4 +1,4 @@
-[[collect]]
+[[collects]]
   repository = "https://github.com/google/fonts"
   requests = [
     "ufl/ubuntu/Ubuntu-Medium.ttf",
@@ -7,7 +7,7 @@
   version = "master"
   dir = "fonts"
 
-[[collect]]
+[[collects]]
   repository = "https://github.com/Microsoft/fonts"
   requests = [
     "Symbols/winjs-symbols.ttf",

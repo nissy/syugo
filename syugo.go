@@ -5,6 +5,7 @@ import (
 	"crypto/rand"
 	"encoding/binary"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -14,23 +15,40 @@ import (
 )
 
 type (
-	Collects []*Collect
+	Syugo struct {
+		Collects []*Collect
+	}
 
 	Collect struct {
-		Repository string   `toml:"repository" validate:"required"`
-		Requests   []string `toml:"requests"`
-		Version    string   `toml:"version" validate:"required"`
-		Dir        string   `toml:"dir"`
+		Repository string
+		Requests   []string
+		Version    string
+		Dir        string
 	}
 )
 
-func (cs Collects) Run() (err error) {
+func NewSyugo(cs []*Collect) (*Syugo, error) {
+	if len(cs) == 0 {
+		return nil, errors.New("collect is required")
+	}
+	for i, v := range cs {
+		if len(v.Repository) == 0 {
+			return nil, fmt.Errorf("collect[%d] is repository required.", i)
+		}
+	}
+
+	return &Syugo{
+		Collects: cs,
+	}, nil
+}
+
+func (s *Syugo) Run() (err error) {
 	tmpDir := path.Join(os.TempDir(), random())
 	defer func() {
 		err = os.RemoveAll(tmpDir)
 	}()
 
-	for _, v := range cs {
+	for _, v := range s.Collects {
 		if err := v.checkout(path.Join(tmpDir, v.Dir)); err != nil {
 			return err
 		}
@@ -44,7 +62,7 @@ func (cs Collects) Run() (err error) {
 	return copy(tmpDir, curDir)
 }
 
-func (c *Collect) checkout(dir string) (err error) {
+func (c *Collect) checkout(dir string) error {
 	if err := os.MkdirAll(dir, 0755); err != nil {
 		return err
 	}

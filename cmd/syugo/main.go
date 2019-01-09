@@ -7,13 +7,12 @@ import (
 
 	"github.com/BurntSushi/toml"
 	"github.com/nissy/syugo"
-	"gopkg.in/go-playground/validator.v9"
 )
 
 var filename = flag.String("c", "syugo.toml", "set configuration file.")
 
 type Config struct {
-	Collects syugo.Collects `toml:"collect" validate:"required,dive,required"`
+	Collects []*syugo.Collect
 }
 
 func main() {
@@ -31,9 +30,11 @@ func run() (err error) {
 	if _, err := toml.DecodeFile(*filename, cfg); err != nil {
 		return err
 	}
-	if err := validator.New().Struct(cfg); err != nil {
+
+	syu, err := syugo.NewSyugo(cfg.Collects)
+	if err != nil {
 		return err
 	}
 
-	return cfg.Collects.Run()
+	return syu.Run()
 }
