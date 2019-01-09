@@ -7,6 +7,7 @@ $ go get -u github.com/nissy/syugo/cmd/syugo
 ```
 
 ## Config
+syugo.sample.toml
 ```toml
 [[collects]]
   repository = "https://github.com/google/fonts"
